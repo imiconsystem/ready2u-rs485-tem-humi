@@ -1,6 +1,6 @@
 # Ready to use RS485 Temperature and Humidity
 
-ระบบวัดทิศทางลม เพื่อการแจ้งเตือน หรือควบคุมสั่งการอัตโนมัติ พร้อม Web Monitoring & WiFi management สำหรับ New Micromation Dev Board V.2 Lite with ESP32 ใช้ในการแสดงผลค่าต่างที่วัดได้ และการตั้งค่าต่างๆ ผ่านเว็บบราวเซอร์
+ระบบวัดอุณหภูมิและความชิ้น เพื่อการแจ้งเตือน หรือควบคุมสั่งการอัตโนมัติ พร้อม Web Monitoring & WiFi management สำหรับ New Micromation Dev Board V.2 Lite with ESP32 ใช้ในการแสดงผลค่าต่างที่วัดได้ และการตั้งค่าต่างๆ ผ่านเว็บบราวเซอร์
 
 ![RS485 Temperature and Humidity](https://github.com/imiconsystem/ready2u-rs485-tem-humi/blob/ceb66e98a28e992e84ce243050311125ebc9b003/images/cover.JPG)
 

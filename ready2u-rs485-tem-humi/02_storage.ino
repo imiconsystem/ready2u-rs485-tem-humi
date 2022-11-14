@@ -9,10 +9,10 @@ void storageSetup() {
   preferences.begin(prekey, false);
 
 
-  maxSpd1 = preferences.getInt("maxSpd1", 0);
-  maxSpd2 = preferences.getInt("maxSpd2", 0);
-  maxSpd3 = preferences.getInt("maxSpd3", 0);
-  maxSpd4 = preferences.getInt("maxSpd4", 0);
+  setVar1 = preferences.getInt("setVar1", 0);
+  setVar2 = preferences.getInt("setVar2", 0);
+  setVar3 = preferences.getInt("setVar3", 0);
+  setVar4 = preferences.getInt("setVar4", 0);
 
 
   WIssid = preferences.getString("WiFissid", "");

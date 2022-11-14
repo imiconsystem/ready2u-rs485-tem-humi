@@ -3,10 +3,10 @@
 
 // INPUTS
 // กำหนดตัวแปรสำหรับการสื่อสารผ่านโปรโตคอล Modbus RTU
-#define RXD2 16 // กำหนดหมายเลข GPIO 16 สำหรับขา Rx
-#define TXD2 17 // กำหนดหมายเลข GPIO 17 สำหรับขา Tx
+#define RXD2 16  // กำหนดหมายเลข GPIO 16 สำหรับขา Rx
+#define TXD2 17  // กำหนดหมายเลข GPIO 17 สำหรับขา Tx
 
-#define SW 2 // Custom swithch
+#define SW 2  // Custom swithch
 
 // OUTPUTS
 #define R1 23
@@ -30,148 +30,115 @@ String device_name = "485th";
 int32_t setVar1, setVar2, setVar3, setVar4;
 float_t TEMP, HUMI;
 
-struct ALARMLEV
-{
-  String word;
+struct WEBINFO {
+  String stateText;
   String icon;
+  String cssClass;
 };
-struct ALARMLEV alarmlev = {};
+struct WEBINFO R1info = { "OFF", "", "normal" };
+struct WEBINFO R2info = { "OFF", "", "normal" };
+struct WEBINFO R3info = { "OFF", "", "normal" };
+struct WEBINFO R4info = { "OFF", "", "normal" };
 
-// RELAYS
-
-void relayHi(int relay)
-{
-
-  digitalWrite(relay, 1);
-}
-
-void relayLo(int relay)
-{
-  digitalWrite(relay, 0);
-}
-
-bool relayIsOn(int relay)
-{
-  return digitalRead(relay) == 0;
-}
-
-void relaySetup()
-{
-  pinMode(R1, OUTPUT);
-  pinMode(R2, OUTPUT);
-  pinMode(R3, OUTPUT);
-  pinMode(R4, OUTPUT);
-
-  relayLo(R1);
-  relayLo(R2);
-  relayLo(R3);
-  relayLo(R4);
-}
-
-void controlRelay()
-{
-  Serial.println("Controll run");
-  Serial.println(TEMP);
-  Serial.println(setVar1);
-  Serial.println(setVar2);
-  if (TEMP <= setVar1 && setVar1 > 0)
+void controlRelay() {
+  // Serial.println("Controll run");
+  // Serial.println(TEMP);
+  // Serial.println(setVar1);
+  // Serial.println(setVar2);
+  if (TEMP <= setVar1 && setVar1 > 0) {
     relayHi(R1);
-  else
+    R1info.stateText = "ON";
+    R1info.cssClass = "alert";
+  } else {
     relayLo(R1);
+    R1info.stateText = "OFF";
+    R1info.cssClass = "normal";
+  }
 
-  if (TEMP >= setVar2 && setVar2 > 0)
+  if (TEMP >= setVar2 && setVar2 > 0) {
     relayHi(R2);
-  else
+    R2info.stateText = "ON";
+    R2info.cssClass = "alert";
+  } else {
     relayLo(R2);
-
-  if (HUMI <= setVar3 && setVar3 > 0)
+    R2info.stateText = "OFF";
+    R2info.cssClass = "normal";
+  }
+  if (HUMI <= setVar3 && setVar3 > 0) {
     relayHi(R3);
-  else
+    R3info.stateText = "ON";
+    R3info.cssClass = "alert";
+  } else {
     relayLo(R3);
-
-  if (HUMI >= setVar4 && setVar4 > 0)
+    R3info.stateText = "OFF";
+    R3info.cssClass = "normal";
+  }
+  if (HUMI >= setVar4 && setVar4 > 0) {
     relayHi(R4);
-  else
+    R4info.stateText = "ON";
+    R4info.cssClass = "alert";
+  } else {
     relayLo(R4);
+    R4info.stateText = "OFF";
+    R4info.cssClass = "normal";
+  }
+  Serial.println("R1");
+  Serial.println(R1info.stateText);
+  Serial.println(R1info.cssClass);
+  Serial.println("R2");
+  Serial.println(R2info.stateText);
+  Serial.println(R2info.cssClass);
+  Serial.println("R3");
+  Serial.println(R3info.stateText);
+  Serial.println(R3info.cssClass);
+  Serial.println("R4");
+  Serial.println(R4info.stateText);
+  Serial.println(R4info.cssClass);
+  Serial.println("----");
 }
-void setTemLoHi(float tem,int lo, int hi){
-    TEMP = tem;
-    setVar1 = lo;
-    setVar2 = hi;
-    controlRelay();
-}
-void _setup()
-{
-  // serialSetup();
-  relaySetup();
-  // resetbuttonSetup();
-  // storageSetup();
 
+void setup() {
   TEMP = 0;
   HUMI = 0;
+  Serial.begin(115200);  // For debug
+  Serial.println("ESP start.");
+  serialSetup();
+  relaySetup();
+  resetbuttonSetup();
+  storageSetup();
 
-  if (SETMODE == 1) // SET
+  if (SETMODE == 1)  // SET
   {
     SETMODE = true;
-    // wifiapSetup();
-  }
-  else if (SETMODE == 2)
-  { // RESET FACTORY
-    // storageClear();
-    //  ESP.restart();
-  }
-  else
-  {
+    wifiapSetup();
+
+
+
+  } else if (SETMODE == 2) {  // RESET FACTORY
+    storageClear();
+    // ESP.restart();
+  } else {
     // RUN
-    // webserverSetup();
+    webserverSetup();
   }
 }
 
-void _loop()
-{
+void loop() {
+  if (SETMODE == 0) {
 
-  if (SETMODE == 0)
-  {
-
-    // webserverLoop();
-    // clientLoop();
-    // serialLoop();
-    // controlRelay();
-  }
-  else if (SETMODE == 1) // SET
+    webserverLoop();
+    clientLoop();
+    serialLoop();
+    controlRelay();
+  } else if (SETMODE == 1)  // SET
   {
     Serial.println("SET MODE.");
-    // clientLoop();
-    // blinkSet();
-  }
-  else if (SETMODE == 2)
-  { // RESET
-    // blinkReset();
-  }
-  else
-  {
+    clientLoop();
+    blinkSet();
+  } else if (SETMODE == 2) {  //RESET
+    blinkReset();
+  } else {
     Serial.println("CLIENT MODE.");
-    // clientLoop();
+    clientLoop();
   }
-}
-#if defined(EPOXY_DUINO)
-#include <AUnit.h>
-using aunit::TestRunner;
-#include "tests/test.ino"
-#endif
-void setup()
-{
-
-  Serial.begin(115200);
-  while (!Serial); // Wait until Serial is ready - Leonardo/Micro
-
-  _setup();
-}
-
-void loop()
-{
-  _loop();
-#if defined(EPOXY_DUINO)
-  aunit::TestRunner::run();
-#endif
 }

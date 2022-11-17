@@ -193,7 +193,7 @@ Set value = 0 to disable relay.\
 <div><input type=\"submit\" value=\"SAVE\"></div>\
 </form>\
 <div style=\"text-align: center;\">\
-<hr> Ready to use Anemometer Devkit.</div>\
+<hr> Ready to use RS485 TEM & HUMI Devkit.</div>\
 </div>\
 </body>\
 </html>",

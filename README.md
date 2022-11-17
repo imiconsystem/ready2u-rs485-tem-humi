@@ -6,7 +6,8 @@
 
 
 ## ฟีเจอร์การแสดงผลและสั่งงาน
-- แสดงผลค่าอุณหภูมิและความชื้น
+- แสดงผลค่าอุณหภูมิในอากาศ
+- แสดงผลค่าความชื้นสัมพัทธ์ในอากาศ
 - แสดงสถานะการควบคุมสั่งงานผ่าน RELAY
 - แสดงสถานะเงื่อนไขสั่งงานที่ได้ตั้งค่าไว้ล่วงหน้า
 
@@ -43,16 +44,23 @@
 1. ezButton by ArduinoGetStarted.com Version 1.0.4 https://arduinogetstarted.com/tutorials/arduino-button-library
 
 ## Flash โปรแกรมลง ESP32
-1. เข้าเมนู Tools เลือกบอร์ด DOIT ESP32 DEVKIT V1
-2. เลือกพอร์ต
-3. ดาวน์โหลดโค๊ดโปรแกรม https://github.com/imiconsystem/ready2u-rs485-tem-humi/releases
-4. เปิดไฟล์ ready2u-rs485-tem-humi.ino
-5. อัพโหลดไฟล์
+1. เปิดโปรแกรม Arduino IDE
+2. เข้าเมนู Tools เลือกบอร์ด DOIT ESP32 DEVKIT V1
+3. เลือกพอร์ต
+4. ดาวน์โหลดโค๊ดโปรแกรม https://github.com/imiconsystem/ready2u-rs485-tem-humi/releases
+5. เปิดไฟล์ ready2u-rs485-tem-humi.ino
+6. อัพโหลดไฟล์
+7. รอสักครู่เพื่อให้ระบบเชื่อมต่อเข้ากับ WiFi จากนั้นสามารถเข้าสู่หน้า Web monitoring ผ่านเว็บบราวเซอร์ด้วย URL http://485th.local
+
+## **หมายเหตุ
+
+ระบบปฏิบัติการของท่านต้องติดตั้ง mDNS service ถึงจะสามารถเข้าดูหน้าเว็บด้วยโดเมนเนมได้ ซึ่งระบบปฏิบัติการส่วนมากจะติดตั้งให้โดยอัตโนมัติแล้ว  [>> เรียนรู้เพิ่มเติม](https://espressif.github.io/esp-protocols/mdns/en/index.html)
 
 
 ## การใช้งานตั้งค่า 'SET MODE' 
 - กด Switch ค้างไว้… แล้ว กด EN หรือ reset บน ESP32 1 ครั้ง จากนั้นรอ 2 วินาที จึงปล่อยปุ่ม Switch, Builtin LED บน ESP32 จะกระพริบเมื่อเข้าสู่ SET MODE
 - จากนั้นเชื่อมต่อระบบผ่าน WiFi ด้วย SSID = "485THDevkit" ; Password = "dddddddd";
+- สามารถเข้าสู่หน้าจอตั้งค่าผ่านเว็บบราวเซอร์ด้วย URL http://192.168.4.1
 
 SET MODE ประกอบไปด้วย
 

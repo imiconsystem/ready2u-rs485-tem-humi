@@ -23,7 +23,7 @@ void blinkReset() {
 
 void blinkWiFiLoss() {
   blinkSetup();
-  for (int i = 1; i <= 5; i++) {
+  for (int i = 1; i <= 3; i++) {
     digitalWrite(2, HIGH);
     delay(500);
     digitalWrite(2, LOW);

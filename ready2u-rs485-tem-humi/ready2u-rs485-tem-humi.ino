@@ -27,6 +27,8 @@ String myIP;
 String webTitle = "RS485 Temperature & Humidity Station";
 String device_name = "485th";
 
+String logString;
+
 int32_t setVar1, setVar2, setVar3, setVar4;
 float_t TEMP, HUMI;
 
@@ -98,28 +100,39 @@ void controlRelay() {
 }
 
 void setup() {
+  beep();
   TEMP = 0;
   HUMI = 0;
   Serial.begin(115200);  // For debug
   Serial.println("ESP start.");
   serialSetup();
+  oledSetup();
+  oledLogSetup();
   relaySetup();
   resetbuttonSetup();
   storageSetup();
+  buzzer_setup();
 
   if (SETMODE == 1)  // SET
   {
+    
     SETMODE = true;
+    logString = "Set mode..";
     wifiapSetup();
-
+    oledLogLoop();
 
 
   } else if (SETMODE == 2) {  // RESET FACTORY
+    logString = "Wait 10 seconds then push EN(reset) button.";
+    oledLogLoop();
     storageClear();
+    
     // ESP.restart();
   } else {
     // RUN
     webserverSetup();
+    logString = "System starting..";
+    oledLogLoop();
   }
 }
 
@@ -130,6 +143,7 @@ void loop() {
     clientLoop();
     serialLoop();
     controlRelay();
+    oledLoop();
   } else if (SETMODE == 1)  // SET
   {
     Serial.println("SET MODE.");
